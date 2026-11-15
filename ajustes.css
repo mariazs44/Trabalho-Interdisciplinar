@@ -1,0 +1,10 @@
+/* Contraste no tema escuro e navegação por teclado, preservando a paleta da casa. */
+body:not(.claro) .hero h2 { color: #80b776; }
+body:not(.claro) .hero h3 { color: #ef8973; }
+:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+@media (max-width: 600px) {
+  .cabecalho { gap: 8px 12px; }
+  .links { gap: 4px 12px; }
+  .links a { letter-spacing: .08em; }
+  .pratosprincipais .card-prato { max-width: 100%; }
+}

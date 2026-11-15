@@ -1,0 +1,36 @@
+{
+  "versao": 1,
+  "pedidoId": "RAT-exemplo-20261112-000001",
+  "criadoEm": "2026-11-12T22:00:00Z",
+  "cliente": {
+    "nome": "Cliente de Teste",
+    "email": "cliente.teste@example.com",
+    "telefone": "31999990000",
+    "cpf": "52998224725"
+  },
+  "endereco": {
+    "cep": "30140071",
+    "logradouro": "Rua da Bahia",
+    "numero": "1200",
+    "bairro": "Centro",
+    "cidade": "Belo Horizonte",
+    "uf": "MG"
+  },
+  "itens": [
+    {
+      "produtoId": 1,
+      "nome": "Spaghetti al Pomodoro Fresco e Basilico",
+      "quantidade": 2,
+      "precoUnitario": 42.9
+    },
+    {
+      "produtoId": 9,
+      "nome": "Panna Cotta",
+      "quantidade": 1,
+      "precoUnitario": 22.9
+    }
+  ],
+  "subtotal": 108.7,
+  "taxaEntrega": 8,
+  "total": 116.7
+}

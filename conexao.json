@@ -1,0 +1,7 @@
+{
+  "Servidor": "localhost",
+  "Porta": 3306,
+  "Banco": "delivery_italiano",
+  "Usuario": "root",
+  "Senha": ""
+}

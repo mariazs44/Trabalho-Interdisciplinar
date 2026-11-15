@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ratatouille-Cucina Italiana</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Montserrat:wght@400;500;600;700&family=Pinyon+Script&display=swap">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="ajustes.css">
+</head>
+<body>
+    <nav class="cabecalho">
+        <div class="logo" onclick="go('home')">Ratatouille</div>
+        <div class="links" id="links">
+            <a data-v="home" href="#v-home" onclick="go('home'); return false">Início</a>
+            <a data-v="produtos" href="#v-produtos" onclick="go('produtos'); return false">Cardápio</a>
+            <a data-v="pedidos" href="#v-pedidos" onclick="go('pedidos'); return false">Pedidos</a>
+            <a data-v="carrinho" href="#v-carrinho" onclick="go('carrinho'); return false" class="car">Carrinho<span class="cesta" id="quantidade">0</span></a>
+            <a data-v="perfil" href="#v-perfil" onclick="go('perfil'); return false">Perfil</a>
+        </div>
+        <label class="pesquisa"><input id="barra" placeholder="Buscar pratos…" oninput="busca(this.value)"></label>
+        <div class="user" id="auth"></div>
+    </nav>
+    <main>
+        <section class="view" id="v-home">
+            <div class="hero">
+                <div>
+                    <h1 class="script">Ratatouille</h1>
+                    <h2>CUCINA</h2>
+                    <h3>ITALIANA</h3>
+                    <p>Sabor italiano autêntico,<br>do forno à sua mesa.</p>
+                    <div class="row">
+                        <button class="btnfill" onclick="go('produtos')">Fazer pedido</button>
+                        <button class="btn" onclick="go('produtos')">Ver cardápio</button>
+                    </div>
+                </div>
+                <img src="culinaria-italiana-1.jpg" alt="img1" class="img1">
+            </div>
+            <div class="bordao">
+                <span>O verdadeiro sabor da Itália, direto para a sua mesa!</span>
+            </div>
+            <div class="pratos">
+                <span class="bordao2">I nostri classici</span>
+                <h2 class="script">Pratos da casa</h2>
+            </div>
+            <div class="pratosprincipais">
+                <div class="card-prato">
+                    <div class="container-icone">
+                        <img src="1_gdvuMWmCJJRhi_XfGcu8-Q.jpg" alt="macarrao" class="macarrao">
+                    </div>
+                    <h3> Spaghetti al Pomodoro Fresco e Basilico</h3>
+                    <p>Tomate italiano, azeite extravirgem, manjericão e massa trefilada em bronze.</p>
+                </div>
+                <div class="card-prato">
+                    <div class="container-icone">
+                        <img src="pizza-5275191_1920.webp" alt="pizza" class="pizza">
+                    </div>
+                    <h3>Pizza Margherita con Burrata e Pomodorini</h3>
+                    <p>Massa de longa fermentação, muçarela de búfala, tomate e folhas de manjericão.</p>
+                </div>
+                <div class="card-prato">
+                    <div class="container-icone">
+                        <img src="receitas-de-doces-italianos-1-730x449.webp" alt="sobremesa" class="sobremesa">
+                    </div>
+                    <h3>Cannoli Siciliani Tradizionali </h3>
+                    <p>Massa artesanal crocante com recheio cremoso de ricota doce e finas gotas de chocolate.</p>
+                </div>
+            </div>
+        </section>
+        <section class="view oculto" id="v-produtos">
+            <div class="pagina">
+                <span class="bordao2">Il nostro menù</span>
+                <h2 class="script">Cardápio</h2>
+                <div class="filtros" id="filtros"></div>
+                <div class="grade-cardapio" id="lista-produtos"></div>
+                <p class="vazio oculto" id="sem-resultado">Nenhum prato encontrado para a sua busca.</p>
+            </div>
+        </section>
+        <section class="view oculto" id="v-pedidos">
+            <div class="pagina">
+                <span class="bordao2">I tuoi ordini</span>
+                <h2 class="script">Meus pedidos</h2>
+                <div id="lista-pedidos"></div>
+            </div>
+        </section>
+        <section class="view oculto" id="v-carrinho">
+            <div class="pagina">
+                <span class="bordao2">Il tuo carrello</span>
+                <h2 class="script">Carrinho</h2>
+                <div class="carrinho-layout">
+                    <div id="itens-carrinho"></div>
+                    <aside class="resumo" id="resumo">
+                        <h3>Resumo do pedido</h3>
+                        <div class="linha"><span>Subtotal</span><span id="r-subtotal">R$ 0,00</span></div>
+                        <div class="linha"><span>Entrega</span><span id="r-entrega">R$ 0,00</span></div>
+                        <div class="linha total"><span>Total</span><span id="r-total">R$ 0,00</span></div>
+                        <button class="btnfill" onclick="finalizar()">Finalizar pedido</button>
+                        <button class="btn" onclick="go('produtos')">Continuar comprando</button>
+                        <button class="remover" onclick="esvaziar()">Esvaziar carrinho</button>
+                    </aside>
+                </div>
+            </div>
+        </section>
+        <section class="view oculto" id="v-perfil">
+            <div class="pagina">
+                <span class="bordao2">Il tuo profilo</span>
+                <h2 class="script">Meu perfil</h2>
+                <form class="formulario largo" onsubmit="salvarPerfil(event)" novalidate>
+                    <p class="msg" id="perfil-msg"></p>
+                    <div class="grade-form">
+                        <div class="campo inteiro"><label for="p-nome">Nome completo</label><input id="p-nome" data-mask="nome" maxlength="60"></div>
+                        <div class="campo inteiro"><label for="p-email">E-mail</label><input id="p-email" type="email" readonly></div>
+                        <div class="campo"><label for="p-cpf">CPF</label><input id="p-cpf" readonly></div>
+                        <div class="campo"><label for="p-tel">Telefone</label><input id="p-tel" data-mask="tel" maxlength="15" inputmode="numeric" placeholder="(00) 00000-0000"></div>
+                        <div class="campo"><label for="p-cep">CEP</label><input id="p-cep" data-mask="cep" maxlength="9" inputmode="numeric" placeholder="00000-000"></div>
+                        <div class="campo"><label for="p-num">Número</label><input id="p-num" data-mask="num" maxlength="6" inputmode="numeric"></div>
+                        <div class="campo inteiro"><label for="p-end">Endereço de entrega</label><input id="p-end" maxlength="80"></div>
+                    </div>
+                    <div class="acoes">
+                        <button class="btnfill" type="submit">Salvar alterações</button>
+                        <button class="btn" type="button" onclick="sair()">Sair</button>
+                        <button class="remover" type="button" onclick="excluirConta()">Excluir minha conta</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <section class="view oculto" id="v-login">
+            <div class="pagina">
+                <span class="bordao2">Bentornato</span>
+                <h2 class="script">Entrar</h2>
+                <form class="formulario" onsubmit="entrar(event)" novalidate>
+                    <p class="msg" id="login-msg"></p>
+                    <div class="campo"><label for="l-email">E-mail</label><input id="l-email" type="email" maxlength="80" autocomplete="email" placeholder="seu@email.com"></div>
+                    <div class="campo"><label for="l-senha">Senha</label><input id="l-senha" type="password" maxlength="20" autocomplete="current-password"></div>
+                    <div class="acoes"><button class="btnfill" type="submit">Entrar</button></div>
+                    <p class="troca">Ainda não tem conta? <a href="#v-cadastro" onclick="go('cadastro'); return false">Cadastre-se</a></p>
+                </form>
+            </div>
+        </section>
+        <section class="view oculto" id="v-cadastro">
+            <div class="pagina">
+                <span class="bordao2">Benvenuto</span>
+                <h2 class="script">Cadastro</h2>
+                <form class="formulario largo" onsubmit="cadastrar(event)" novalidate>
+                    <p class="msg" id="cad-msg"></p>
+                    <div class="grade-form">
+                        <div class="campo inteiro"><label for="c-nome">Nome completo</label><input id="c-nome" data-mask="nome" maxlength="60" autocomplete="name"></div>
+                        <div class="campo inteiro"><label for="c-email">E-mail</label><input id="c-email" type="email" maxlength="80" autocomplete="email" placeholder="seu@email.com"></div>
+                        <div class="campo"><label for="c-cpf">CPF</label><input id="c-cpf" data-mask="cpf" maxlength="14" inputmode="numeric" placeholder="000.000.000-00"></div>
+                        <div class="campo"><label for="c-tel">Telefone</label><input id="c-tel" data-mask="tel" maxlength="15" inputmode="numeric" placeholder="(00) 00000-0000"></div>
+                        <div class="campo"><label for="c-cep">CEP</label><input id="c-cep" data-mask="cep" maxlength="9" inputmode="numeric" placeholder="00000-000"></div>
+                        <div class="campo"><label for="c-num">Número</label><input id="c-num" data-mask="num" maxlength="6" inputmode="numeric"></div>
+                        <div class="campo inteiro"><label for="c-end">Endereço de entrega</label><input id="c-end" maxlength="80"></div>
+                        <div class="campo"><label for="c-senha">Senha (mín. 6 caracteres)</label><input id="c-senha" type="password" maxlength="20" autocomplete="new-password"></div>
+                        <div class="campo"><label for="c-senha2">Confirmar senha</label><input id="c-senha2" type="password" maxlength="20" autocomplete="new-password"></div>
+                    </div>
+                    <div class="acoes"><button class="btnfill" type="submit">Criar conta</button></div>
+                    <p class="troca">Já tem conta? <a href="#v-login" onclick="go('login'); return false">Entrar</a></p>
+                </form>
+            </div>
+        </section>
+    </main>
+    <footer class="footer-restaurante">
+        <div class="footer-container">
+            <div class="footer-col marca">
+                <h2>Ratatouille</h2>
+                <p> A essência da Itália, reinventada para o seu paladar.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h3>Nossos horários</h3>
+                <p>Terça a Domingo</p>
+                <p>Das 12h ás 23h</p>
+            </div>
+            <div class="footer-col">
+                <h3>Nossos contatos</h3>
+                <p>(31)9999-9999</p>
+                <p>Ratatouille_italianfood@gmail.com</p>
+                <a class="linkinsta" href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+    <script src="integracao.js"></script>
+</body>
+</html>
